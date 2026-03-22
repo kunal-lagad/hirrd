@@ -20,6 +20,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       }}
       publishableKey={PUBLISHABLE_KEY}
       afterSignOutUrl="/"
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/onboarding"
     >
       <App />
     </ClerkProvider>

@@ -12,6 +12,13 @@ import { dark } from "@clerk/themes";
 import { Button } from "./ui/button";
 import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 
+function safeRedirectPath(raw) {
+  if (!raw || typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (!trimmed.startsWith("/") || trimmed.startsWith("//")) return null;
+  return trimmed;
+}
+
 const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
 
@@ -57,7 +64,9 @@ const Header = () => {
               },
             }}
             signUpForceRedirectUrl="/onboarding"
-            fallbackRedirectUrl="/onboarding"
+            fallbackRedirectUrl={
+              safeRedirectPath(search.get("redirect_url")) ?? "/"
+            }
           />
         </div>
       </div>,

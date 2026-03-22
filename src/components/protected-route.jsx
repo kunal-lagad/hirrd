@@ -4,10 +4,14 @@ import { useUser } from "@clerk/clerk-react";
 
 const ProtectedRoute = ({ children }) => {
   const { isSignedIn, isLoaded, user } = useUser();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   if (isLoaded && !isSignedIn && isSignedIn !== undefined) {
-    return <Navigate to="/?sign-in=true" />;
+    const returnTo = pathname + search;
+    const params = new URLSearchParams();
+    params.set("sign-in", "true");
+    params.set("redirect_url", returnTo);
+    return <Navigate to={`/?${params.toString()}`} replace />;
   }
 
   if (

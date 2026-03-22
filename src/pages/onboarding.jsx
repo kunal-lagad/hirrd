@@ -8,8 +8,8 @@ const Onboarding = () => {
   const { user, isLoaded } = useUser();
   const navigate = useNavigate();
 
-  const navigateUser = (currRole) => {
-    navigate(currRole === "recruiter" ? "/post-job" : "/jobs");
+  const navigateUser = () => {
+    navigate("/");
   };
 
   const handleRoleSelection = async (role) => {
@@ -17,7 +17,7 @@ const Onboarding = () => {
       .update({ unsafeMetadata: { role } })
       .then(() => {
         console.log(`Role updated to: ${role}`);
-        navigateUser(role);
+        navigateUser();
       })
       .catch((err) => {
         console.error("Error updating role:", err);
@@ -26,7 +26,7 @@ const Onboarding = () => {
 
   useEffect(() => {
     if (user?.unsafeMetadata?.role) {
-      navigateUser(user.unsafeMetadata.role);
+      navigateUser();
     }
   }, [user]);
 
